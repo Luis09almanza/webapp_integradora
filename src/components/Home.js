@@ -2,8 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import manwithguitar from '../img/manwithguitar.png';
 import testLogo from '../img/test.svg'
+import Cookies from 'universal-cookie';
 
-export const Home = () => (
+const cookie = new Cookies();
+
+export const Home = () => {
+
+  if(cookie.get('name')){
+    window.location.href="/users";
+  }
+
+  return(
     <>
   <div className="bg-red-400 text-white flex flex-wrap flex-row justify-center">
     <div>
@@ -108,5 +117,5 @@ export const Home = () => (
       </div>
     </section>
   </div>
-</>
-)
+</>)
+}

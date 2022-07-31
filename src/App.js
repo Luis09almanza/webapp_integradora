@@ -17,21 +17,19 @@ export default function App() {
       
       <Navbar />
 
-
       <div>
         <Routes>
-
           <Route path="/" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
-          <Route path="/users" element={<Users />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/Users" element={<Users />}></Route>
 
         </Routes>
       </div>
-    
       <Footer/>
+
     </Router>
   )
 }

@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import Error from './messages/error';
+import Cookies from 'universal-cookie';
+
 
 
 const API = process.env.REACT_APP_API
+const cookie = new Cookies();
 
 export const Login = () => {
 
@@ -32,20 +35,30 @@ export const Login = () => {
         })
       })
       
-      const data = await res.json();
-      console.log(data);
+      const user = await res.json();
+      console.log(user);
 
-      if (data === true){
-        //enviarlo a otra pantalla
-        window.location.href="./users"
-        
-      }else{
+      if (user === false){
         //decirle que el usuario es incorrecto
         guardarError2(true)
+        
       }
+      else{
+        
+        cookie.set('_id', user._id, {path:"/"});
+        cookie.set('name', user.name, {path:"/"});
+        cookie.set('last_name', user.last_name, {path:"/"});
+        cookie.set('email', user.email, {path:"/"});
+        alert(`WelCUM, ${user.name} ${user.last_name}`);
+        window.location.href="/users"
+      }
+
+
     }
 
   }
+
+
 
   let componente;
   if(error){
@@ -58,6 +71,12 @@ export const Login = () => {
     //hay un error mostrarlo
     componente2 = <Error message={'The user does not exist or the fields are misspelled.'}></Error>
   }
+  
+  useEffect(()=>{
+      if(cookie.get('name')){
+        window.location.href="/users";
+      }
+  });
 
 
   return(
